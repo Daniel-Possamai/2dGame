@@ -64,12 +64,26 @@ public Rigidbody2D rig;
     }
 
 
-    // Ajusta a escala do jogador para virar o sprite na direção do movimento
-    if (Pos.x > 0){
-        transform.localScale = new Vector2(1, 1);
-    } else if (Pos.x < 0)
-    {
-        transform.localScale = new Vector2(-1, 1);
+    // Obtém a posição do mouse na tela
+        Vector3 mouseScreenPosition = Input.mousePosition;
+
+        // Converte a posição do mouse para coordenadas do mundo
+        Vector3 mouseWorldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+
+        // Calcula a direção do personagem para o mouse
+        Vector2 direction = new Vector2(
+            mouseWorldPosition.x - transform.position.x,
+            mouseWorldPosition.y - transform.position.y
+        );
+
+        // Ajusta a escala do personagem para fazer o flip
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
-}
 }

@@ -17,15 +17,13 @@ public class Camera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Velocidade * Time.deltaTime);
+        Vector3 mousePosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 targetPosition = (player.transform.position + mousePosition) / 2f;
+        targetPosition.z = transform.position.z;
 
-        transform.position = new Vector2(
-            Mathf.Clamp(transform.position.x,
-            player.GetComponent<Transform>().position.x - MinX,
-            player.GetComponent<Transform>().position.x + MinX),
-            Mathf.Clamp(transform.position.y,
-            player.GetComponent<Transform>().position.y - MinY,
-            player.GetComponent<Transform>().position.y + MinY));
-            
+        targetPosition.x = Mathf.Clamp(targetPosition.x, player.transform.position.x - MinX, player.transform.position.x + MinX);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, player.transform.position.y - MinY, player.transform.position.y + MinY);
+
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Velocidade * Time.deltaTime);
     }
 }
