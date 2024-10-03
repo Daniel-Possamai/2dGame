@@ -16,7 +16,7 @@ public float speed;
 
 
 // Direção do movimento do jogador
-float direction;
+public Vector2 Pos;
 
 
 // Referência ao componente Rigidbody2D para manipulação física
@@ -39,22 +39,35 @@ public Rigidbody2D rig;
     {
         
     // Obtém a entrada horizontal do jogador (teclas A/D ou setas esquerda/direita)   
-    direction = Input.GetAxis("Horizontal");
+    Pos.x = Input.GetAxis("Horizontal");
+    Pos.y = Input.GetAxis("Vertical");
+    
 
     // Define a velocidade do Rigidbody2D com base na direção e velocidade
-    rig.velocity = new Vector2(direction * speed, rig.velocity.y);
+    // rig.velocity = new Vector2(Pos.x * speed, rig.velocity.y);
+
+    rig.velocity = new Vector2(Pos.x * speed, Pos.y * speed);
 
     // Define o parâmetro "isRunning" do Animator com base na direção
-    if (direction != 0){
-        animator.SetBool("isRunning", true);
+    if (Pos.x != 0 || Pos.y != 0){
+        
+        if (Pos.x != 0){
+            animator.SetBool("isHorizontal", true);
+        } else {
+            animator.SetBool("isVertical", true);
+        }
+        
+
     } else {
-        animator.SetBool("isRunning", false);
+        animator.SetBool("isHorizontal", false);
+        animator.SetBool("isVertical", false);
     }
 
+
     // Ajusta a escala do jogador para virar o sprite na direção do movimento
-    if (direction > 0){
+    if (Pos.x > 0){
         transform.localScale = new Vector2(1, 1);
-    } else if (direction < 0)
+    } else if (Pos.x < 0)
     {
         transform.localScale = new Vector2(-1, 1);
     }
