@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         // Inicializa o inventário com slots vazios
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 12; i++)
         {
             GameObject slot = Instantiate(slotPrefab, transform);
             slot.GetComponent<Image>().sprite = emptySlotSprite;
@@ -24,19 +24,16 @@ public class Inventory : MonoBehaviour
         AddItem(pickaxeSprite);
         
         // Certifique-se de que o inventário esteja desativado no início
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false); 
+        
     }
 
     void Update()
     {
-        // Abre ou fecha o inventário ao pressionar a tecla "Tab"
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            Debug.Log("Tab key pressed");
-            gameObject.SetActive(!gameObject.activeSelf);
-            Debug.Log("Inventory active state: " + gameObject.activeSelf);
-        }
+       
     }
+
+    
 
     public void AddItem(Sprite itemSprite)
     {
