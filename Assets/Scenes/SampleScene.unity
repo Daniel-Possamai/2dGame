@@ -285,6 +285,8 @@ GameObject:
   - component: {fileID: 249297436}
   - component: {fileID: 249297437}
   - component: {fileID: 249297438}
+  - component: {fileID: 249297439}
+  - component: {fileID: 249297440}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -508,6 +510,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryPanel: {fileID: 1316950466}
+--- !u!61 &249297439
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249297429}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.03}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.13, y: 0.23}
+    newSize: {x: 0.13, y: 0.23}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.19}
+  m_EdgeRadius: 0
+--- !u!114 &249297440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249297429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce10960172a20e948b0aebe900b0371d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 1316950468}
 --- !u!1 &251706360
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,7 +2313,9 @@ MonoBehaviour:
   pickaxeSprite: {fileID: 21300000, guid: c96cbbb008fe2064bba0c1eaebe19ea8, type: 3}
   axeSprite: {fileID: 21300000, guid: 4ff2b3c915d2f864b864fafee207c01d, type: 3}
   swordSprite: {fileID: 0}
+  playerTransform: {fileID: 249297433}
   selectedItem: {fileID: 0}
+  groundItemPrefab: {fileID: 5000208997173976796, guid: 950c5a182467cbb4396174012ceb7970, type: 3}
 --- !u!114 &1316950469
 MonoBehaviour:
   m_ObjectHideFlags: 0
