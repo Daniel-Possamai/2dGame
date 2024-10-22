@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Inventory : MonoBehaviour
 {
@@ -10,11 +11,12 @@ public class Inventory : MonoBehaviour
     public Sprite pickaxeSprite;
     public Sprite axeSprite; // Novo item
     public Sprite swordSprite; // Novo item
-    
+
     public Transform playerTransform; // Referência ao transform do player
 
     private List<Slot> slots = new List<Slot>();
     public DraggableItem selectedItem; // Tornar pública para acesso
+    public LayerMask groundItemLayer;
 
     void Start()
     {
@@ -45,10 +47,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-   private Vector3 GetDropPositionInFrontOfPlayer()
+    private Vector3 GetDropPositionInFrontOfPlayer()
     {
         // Calcula a posição na frente do player
-        float dropDistance = 1.0f; // Distância na frente do player
+        float dropDistance = .4f; // Distância na frente do player
         Vector3 dropPosition = playerTransform.position;
 
         // Ajusta a posição de drop com base na direção em que o jogador está olhando
@@ -127,13 +129,21 @@ public class Inventory : MonoBehaviour
         GroundItem groundItem = groundItemObject.GetComponent<GroundItem>();
         groundItem.itemSprite = selectedItem.GetComponent<Image>().sprite;
 
+
+
+
         // Restaura o tamanho do slot original
         Slot originalSlot = selectedItem.originalSlot;
         originalSlot.transform.localScale = Vector3.one;
 
-        // Remover o item do inventário
         Destroy(selectedItem.gameObject);
         selectedItem = null;
+    }
+
+    private IEnumerator EnableColliderAfterDelay(Collider2D collider, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        collider.enabled = true;
     }
 
     public void SelectItem(DraggableItem item)
@@ -172,47 +182,47 @@ public class Inventory : MonoBehaviour
     }
 
     public void MoveSelectedItemToSlot(Slot targetSlot)
-{
-    if (selectedItem == null)
     {
-        Debug.LogError("Nenhum item selecionado");
-        return;
+        if (selectedItem == null)
+        {
+            Debug.LogError("Nenhum item selecionado");
+            return;
+        }
+
+        Slot originalSlot = selectedItem.originalSlot;
+
+        if (targetSlot.transform.childCount == 0)
+        {
+            // Move o item para o novo slot
+            selectedItem.transform.SetParent(targetSlot.transform);
+            selectedItem.transform.localPosition = Vector3.zero;
+
+            // Atualiza o originalSlot do item
+            selectedItem.originalSlot = targetSlot;
+        }
+        else
+        {
+            // Troca os itens entre os slots
+            Transform targetItem = targetSlot.transform.GetChild(0);
+            targetItem.SetParent(originalSlot.transform);
+            targetItem.localPosition = Vector3.zero;
+
+            selectedItem.transform.SetParent(targetSlot.transform);
+            selectedItem.transform.localPosition = Vector3.zero;
+
+            // Atualiza os originalSlot dos itens
+            DraggableItem targetDraggableItem = targetItem.GetComponent<DraggableItem>();
+            targetDraggableItem.originalSlot = originalSlot;
+            selectedItem.originalSlot = targetSlot;
+        }
+
+        // Restaura o tamanho do slot original
+        originalSlot.transform.localScale = Vector3.one;
+
+        // Deseleciona o item após a troca
+        DeselectItem(selectedItem);
+        selectedItem = null;
     }
-
-    Slot originalSlot = selectedItem.originalSlot;
-
-    if (targetSlot.transform.childCount == 0)
-    {
-        // Move o item para o novo slot
-        selectedItem.transform.SetParent(targetSlot.transform);
-        selectedItem.transform.localPosition = Vector3.zero;
-
-        // Atualiza o originalSlot do item
-        selectedItem.originalSlot = targetSlot;
-    }
-    else
-    {
-        // Troca os itens entre os slots
-        Transform targetItem = targetSlot.transform.GetChild(0);
-        targetItem.SetParent(originalSlot.transform);
-        targetItem.localPosition = Vector3.zero;
-
-        selectedItem.transform.SetParent(targetSlot.transform);
-        selectedItem.transform.localPosition = Vector3.zero;
-
-        // Atualiza os originalSlot dos itens
-        DraggableItem targetDraggableItem = targetItem.GetComponent<DraggableItem>();
-        targetDraggableItem.originalSlot = originalSlot;
-        selectedItem.originalSlot = targetSlot;
-    }
-
-    // Restaura o tamanho do slot original
-    originalSlot.transform.localScale = Vector3.one;
-
-    // Deseleciona o item após a troca
-    DeselectItem(selectedItem);
-    selectedItem = null;
-}
 }
 
 public class Slot : MonoBehaviour, IPointerClickHandler

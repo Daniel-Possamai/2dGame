@@ -6,7 +6,6 @@ public class PlayerItemCollector : MonoBehaviour
 
     void Start()
     {
-        // Verifica se a referência ao inventário foi atribuída
         if (inventory == null)
         {
             Debug.LogError("Referência ao inventário não atribuída no PlayerItemCollector.");
@@ -15,7 +14,6 @@ public class PlayerItemCollector : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Verifica se o jogador colidiu com um item no chão
         if (other.CompareTag("GroundItem"))
         {
             GroundItem groundItem = other.GetComponent<GroundItem>();

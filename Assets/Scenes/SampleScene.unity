@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 249297438}
   - component: {fileID: 249297439}
   - component: {fileID: 249297440}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2315,6 +2315,9 @@ MonoBehaviour:
   swordSprite: {fileID: 0}
   playerTransform: {fileID: 249297433}
   selectedItem: {fileID: 0}
+  groundItemLayer:
+    serializedVersion: 2
+    m_Bits: 64
   groundItemPrefab: {fileID: 5000208997173976796, guid: 950c5a182467cbb4396174012ceb7970, type: 3}
 --- !u!114 &1316950469
 MonoBehaviour:
